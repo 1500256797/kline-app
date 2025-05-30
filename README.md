@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Crypto Exchange Dashboard
 
-## Getting Started
+A real-time cryptocurrency trading dashboard built with Next.js, featuring live K-line charts and transaction data.
 
-First, run the development server:
+![Overview](./screenshot/overview.png)
+
+## Features
+
+-   Real-time K-line chart visualization
+-   Multiple time period support (1s, 1min, 5min, 15min, 1h)
+-   Live transaction records
+-   Asset list with detailed information
+-   Responsive grid layout
+
+## Screenshots
+
+### K-line Chart
+
+![K-line Chart Example 1](./screenshot/kline1.png)
+![K-line Chart Example 2](./screenshot/kline2.png)
+
+## Local Development
 
 ```bash
-npm run dev
-# or
+# Install dependencies
+yarn install
+
+# Start development server
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Docker Deployment
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Build Image
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+# Build Docker image
+docker build -t kline-app .
+```
 
-## Learn More
+### Run Container
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+# Run container
+docker run -d -p 3000:3000 \
+  --add-host=host.docker.internal:host-gateway \
+  -e NEXT_PUBLIC_API_URL=http://host.docker.internal:80 \
+  --name kline-app kline-app
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# View logs
+docker logs -f kline-app
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Stop container
+docker stop kline-app
 
-## Deploy on Vercel
+# Remove container
+docker rm kline-app
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Environment Variables
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The application uses the following environment variables:
+
+-   `NEXT_PUBLIC_API_URL`: API endpoint URL (default: http://127.0.0.1:80)
+
+For local development, create a `.env.local` file:
+
+```bash
+NEXT_PUBLIC_API_URL=http://127.0.0.1:80
+```
+
+## Tech Stack
+
+-   Next.js - React framework
+-   React - UI library
+-   TypeScript - Type safety
+-   TailwindCSS - Styling
+-   KLineChart - Chart visualization
+-   Shadcn/UI - UI library
+-   SSE - Server-Sent Events
