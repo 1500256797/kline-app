@@ -13,7 +13,7 @@ const TransactionList = ({symbol}: TransactionListProps) => {
     const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
     const fetchTransactions = async () => {
-        const data = await getTxList(symbol || 'MEME/SOL', 1, 100)
+        const data = await getTxList(symbol || 'MEME/SOL', 0, 100)
         if (data) {
             setTransactions(data)
         }
