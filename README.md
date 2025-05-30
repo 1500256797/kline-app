@@ -42,10 +42,7 @@ docker build -t kline-app .
 
 ```bash
 # Run container
-docker run -d -p 3000:3000 \
-  --add-host=host.docker.internal:host-gateway \
-  -e NEXT_PUBLIC_API_URL=http://host.docker.internal:80 \
-  --name kline-app kline-app
+docker run -d -p 3000:3000 --name kline-app kline-app
 
 # View logs
 docker logs -f kline-app
